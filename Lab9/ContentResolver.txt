@@ -1,0 +1,61 @@
+--Lab9
+Package com.mu.contentproviderexample;
+Import…
+Public class MainActivity extends AppCompatActivity  {
+TextView txt;
+@Override
+Protected void onCreate(Bundle savedInstanceState) {
+Super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+txt = findViewByID(R.id.txtView);
+//URI is for connecting contact database
+Uri uri = ContactsContract.CommonDataKInds.Phone.Content_uri;
+//Projection is used for fetecting datatype
+String[] projection = new String[]{
+ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY,
+ContactsContract.CommonDataKinds,Phone.NUMBER,
+};
+//Selection is for selecting Which data from fields.
+String selection = ContactsContact.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + “=’hardik’”;
+//Resolver is to fetch data from ContentProvider
+ContentResolver  resolver = getContentResolver();
+//Resolver.qurey user 5 parameter to make operation on data
+Cursor res = resolver.qurey(uri,projection,selection,selectArgs: null,sortorder: null);
+If(res.getCount()==0)
+{
+	Toast.makeText(context: this,text:”Records Not Found”,Toast.Length_SHORT).Show();
+} Else {
+	//Cursor.moveToNext() is used To move cursor
+	While(res.novaToNext()){
+	//Cursor.getString(0) is used to get Display_Name_Primary
+	//Cursor.getString(1) is used to get number
+	Txt.setText(res.getString(columnindex: 0)+”: Phone=”+ res.getString(columnindex:1));
+
+}
+}
+catch (Exception e)
+{
+	Toast.makeText(context:this,txt:e.get,Toast.LENGTH_SHORT).Show();
+}
+
+}
+}
+<manifest xmlns:android =”http://schemas.android.com/apk/res/android”
+Xmlns:tools =”http://schemas.android.com/tools”>
+<uses-permission android:name = “android.permission.READ_CONTACTS”/>
+< uses-permission android:name = “android.permission.WRITE_CONTACTS”/>
+<application 
+	Android:allowBackup=”TRUE”
+	Android:dataExtractRules=”@xml/Data_extraction_rules”
+	Android:fullBackupContent=”@xml/backup_rules”
+	Android:icon=”@mipmap/ic_launcher_round”
+	Android:supportsRtl=”True”
+	Android:theme=”@style/Theme.ContentProviderExample”
+	Tools:TargetApi = “31”>
+<activity
+	Android:name = “.MainActivity”
+	Andriod:exported=”True”>
+	<intent-filter>
+<Action Android:name=”android.intent.action.MAIN”/>
+
+/>
